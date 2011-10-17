@@ -3,6 +3,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
 	<classpathentry kind="lib" path="C:/Program Files (x86)/Java/jre6/lib/plugin.jar"/>
-	<classpathentry kind="lib" path="D:/JavaLibraries/dovico common library.jar"/>
+	<classpathentry kind="lib" path="R:/Builds/REST_API/Apps/Java/CommonLibrary/JavaCommonLibrary.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
