@@ -85,12 +85,14 @@ public class CEmployeeListModel implements ListModel {
 			// Grab the current Employee element
 			xeEmployee = (Element)xnlEmployees.item(iIndex);
 			
-			// Grab the values that we're interested in
+			// Grab the values that we're interested in (NOTE: The resource representation for GET 'Employee/Me/' was modified to only return the ID, LastName, 
+			// FirstName, and GetItemURI. We could grab the GetItemURI and try to get the additional information - WorkDays and Hours - which might not work if the 
+			// user token doesn't have Employee access. Let's just use defaults if the values we want are not present.)
 			lID = Long.valueOf(CXMLHelper.getChildNodeValue(xeEmployee, "ID"));
 			sLastName = CXMLHelper.getChildNodeValue(xeEmployee, "LastName");
 			sFirstName = CXMLHelper.getChildNodeValue(xeEmployee, "FirstName");
-			sWorkDays = CXMLHelper.getChildNodeValue(xeEmployee, "WorkDays");
-			sExpectedHoursPerDay = CXMLHelper.getChildNodeValue(xeEmployee, "Hours");
+			sWorkDays = CXMLHelper.getChildNodeValue(xeEmployee, "WorkDays", ".MTWTF.");
+			sExpectedHoursPerDay = CXMLHelper.getChildNodeValue(xeEmployee, "Hours", "8");
 			
 			// Add the current employee item to our list
 			m_lstEmployees.add(new CEmployee(lID, sLastName, sFirstName, sWorkDays, sExpectedHoursPerDay));
