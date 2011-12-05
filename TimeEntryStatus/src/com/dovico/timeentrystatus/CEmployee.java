@@ -90,6 +90,9 @@ public class CEmployee {
 	
 	
 	// Causes the Time Entry data, for the current employee and date range, to be loaded in
+	/// <history>
+    /// <modified author="C. Gerard Gallant" date="2011-12-05" reason="With the change to how the CXMLHelper.getChildNodeValue function works, this function broke. Modified this function to grab the Sheet element and from that element grab the Status and RejectedReason values"/>
+    /// </history>
 	protected void loadTimeEntryData(String sURI, String sConsumerSecret, String sDataAccessToken) {
 		// Load in the current page of data. If there is data returned then...
 		APIRequestResult arResult = CRESTAPIHelper.makeAPIRequest(sURI, "GET", null, sConsumerSecret, sDataAccessToken);
@@ -99,23 +102,23 @@ public class CEmployee {
 			Element xeDocElement = xdDoc.getDocumentElement();
 			String sNextPageURI = CXMLHelper.getChildNodeValue(xeDocElement, Constants.NEXT_PAGE_URI);
 
-			
-			Element xeTimeEntry = null;			
+			Element xeTimeEntry = null, xeSheet = null;			
 			String sID = "", sDate = "", sStatus = "", sRejectedReason = "";
 			
 			// Grab the list of TimeEntry nodes
 			NodeList xnlTimeEntries = xeDocElement.getElementsByTagName("TimeEntry");
 			int iTimeEntryCount = xnlTimeEntries.getLength();
 			for(int iIndex = 0; iIndex < iTimeEntryCount; iIndex++) {
-				// Grab the current TimeEntry element
+				// Grab the current TimeEntry element and the Sheet element
 				xeTimeEntry = (Element)xnlTimeEntries.item(iIndex);
+				xeSheet = (Element)xeTimeEntry.getElementsByTagName("Sheet").item(0);
 							
 				// Grab the ID (NOTE: The ID will have a prefix 'T' or 'M'. Items with the 'T' prefix will be Guids. Items with the 'M' prefix will be 'long'), Date,
 				// Status, and Rejected Reason (will be an empty string unless the Status is 'R' - Rejected)
 				sID = CXMLHelper.getChildNodeValue(xeTimeEntry, "ID");
 				sDate = CXMLHelper.getChildNodeValue(xeTimeEntry, "Date");
-				sStatus = CXMLHelper.getChildNodeValue(xeTimeEntry, "Status");
-				sRejectedReason = CXMLHelper.getChildNodeValue(xeTimeEntry, "RejectedReason");
+				sStatus = CXMLHelper.getChildNodeValue(xeSheet, "Status");
+				sRejectedReason = CXMLHelper.getChildNodeValue(xeSheet, "RejectedReason");
 				
 				// Add the current Time Entry item to our list
 				m_lstTimeEntries.add(new CTimeEntry(sID, sDate, sStatus, sRejectedReason));
