@@ -46,9 +46,12 @@ public class CPanel_SettingsEx extends CPanel_Settings {
 	
 	
 	// Populate our extra fields
+	/// <history>
+    /// <modified author="C. Gerard Gallant" date="2011-12-15" reason="Due to recent changes to the CPanel_Settings constructor, had to modify the constructor call by passing in dummy values for the employee information (this app does not need the employee information at this time)"/>
+    /// </history>
 	public void setSettingsData(String sConsumerSecret, String sDataAccessToken, boolean bEmployeeListModeIsManagerView){
-		// Pass the Consumer Secret and Data Access Token to the parent class
-		super.setSettingsData(sConsumerSecret, sDataAccessToken);
+		// Pass the Consumer Secret and Data Access Token to the parent class. Just pass in default values for the employee information (not used by this app)
+		super.setSettingsData(sConsumerSecret, sDataAccessToken, 0L, "", "");
 		
 		
 		// Cause the radio buttons to be selected based on if we're in Manager view or User view 
