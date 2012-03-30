@@ -51,7 +51,7 @@ public class CPanel_SettingsEx extends CPanel_Settings {
     /// </history>
 	public void setSettingsData(String sConsumerSecret, String sDataAccessToken, boolean bEmployeeListModeIsManagerView){
 		// Pass the Consumer Secret and Data Access Token to the parent class. Just pass in default values for the employee information (not used by this app)
-		super.setSettingsData(sConsumerSecret, sDataAccessToken, 0L, "", "");
+		super.setSettingsData(sConsumerSecret, sDataAccessToken, Constants.API_VERSION_TARGETED, 0L, "", "");
 		
 		
 		// Cause the radio buttons to be selected based on if we're in Manager view or User view 

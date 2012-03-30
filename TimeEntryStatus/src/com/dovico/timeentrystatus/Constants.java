@@ -28,4 +28,6 @@ public class Constants {
 	public static String STATUS_REJECTED = "R";
 	public static String STATUS_APPROVED = "A";
 	
+	// The API version that we are targeting
+	public static String API_VERSION_TARGETED = "2";	
 }
