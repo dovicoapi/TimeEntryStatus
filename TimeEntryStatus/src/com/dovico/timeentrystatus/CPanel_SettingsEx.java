@@ -9,6 +9,7 @@ import com.dovico.commonlibrary.CPanel_Settings;
 public class CPanel_SettingsEx extends CPanel_Settings {
 	private static final long serialVersionUID = 1L;
 
+	private JLabel m_lblEmployeeListMode = null;
 	private ButtonGroup m_btnGroup = null;
 	private JRadioButton m_optManagerView = null;
 	private JRadioButton m_optUserView = null;
@@ -20,10 +21,10 @@ public class CPanel_SettingsEx extends CPanel_Settings {
 		
 		
 		// Employee List Mode label
-		JLabel lblEmployeeListMode = new JLabel("Employee List Mode:");
-		lblEmployeeListMode.setBounds(10, 73, 117, 20);
-		lblEmployeeListMode.setFont(new Font("Arial", Font.PLAIN, 11));
-		this.add(lblEmployeeListMode);
+		m_lblEmployeeListMode = new JLabel("Employee List Mode:");
+		m_lblEmployeeListMode.setBounds(10, 73, 117, 20);
+		m_lblEmployeeListMode.setFont(new Font("Arial", Font.PLAIN, 11));
+		this.add(m_lblEmployeeListMode);
 		
 		// Employee List Mode - Manager view
 		m_optManagerView = new JRadioButton("Manager view");
@@ -50,9 +51,21 @@ public class CPanel_SettingsEx extends CPanel_Settings {
     /// <modified author="C. Gerard Gallant" date="2011-12-15" reason="Due to recent changes to the CPanel_Settings constructor, had to modify the constructor call by passing in dummy values for the employee information (this app does not need the employee information at this time)"/>
     /// </history>
 	public void setSettingsData(String sConsumerSecret, String sDataAccessToken, boolean bEmployeeListModeIsManagerView){
-		// Pass the Consumer Secret and Data Access Token to the parent class. Just pass in default values for the employee information (not used by this app)
-		super.setSettingsData(sConsumerSecret, sDataAccessToken, Constants.API_VERSION_TARGETED, 0L, "", "");
+		// We will hide the Consumer Secret field if the constant for the token is not an empty string. Pass the proper consumer secret value to our parent class
+		// if the constant was specified. If not, use the token that was last saved by the user.
+		boolean bHideConsumerSecretField = !Constants.CONSUMER_SECRET_API_TOKEN.isEmpty();
+		String sConsumerSecretToUse = (bHideConsumerSecretField ? Constants.CONSUMER_SECRET_API_TOKEN : sConsumerSecret);
 		
+		// Pass the Consumer Secret and Data Access Token to the parent class. Just pass in default values for the employee information (not used by this app)
+		super.setSettingsData(sConsumerSecretToUse, sDataAccessToken, Constants.API_VERSION_TARGETED, 0L, "", "", bHideConsumerSecretField);
+		
+		
+		// If we hid the Consumer Secret field then...
+		if(bHideConsumerSecretField){
+			m_lblEmployeeListMode.setBounds(10, (73 - 30), 117, 20);
+			m_optManagerView.setBounds(133, (73 - 30), 305, 20);
+			m_optUserView.setBounds(133, (103 - 30), 305, 20);
+		}
 		
 		// Cause the radio buttons to be selected based on if we're in Manager view or User view 
 		m_optManagerView.setSelected(bEmployeeListModeIsManagerView);

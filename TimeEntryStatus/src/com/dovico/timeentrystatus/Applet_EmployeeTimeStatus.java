@@ -28,8 +28,14 @@ public class Applet_EmployeeTimeStatus extends JApplet {
 	private ActionListener GetActionListenerForSettingsChange(){
 		return new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {  
+				// Grab the current Consumer Secret we have. If it matches our constant then clear the variable so that we don't save the value to a cookie potentially
+				// exposing sensitive information
+				String sConsumerSecretToSave = m_UILogic.getConsumerSecret();
+				if(sConsumerSecretToSave.equals(Constants.CONSUMER_SECRET_API_TOKEN)){ sConsumerSecretToSave = ""; }
+				
+				
 				// Call our Save Settings function
-				saveSettings(m_UILogic.getConsumerSecret(), m_UILogic.getDataAccessToken(), m_UILogic.getEmployeeListModeIsManagerView());
+				saveSettings(sConsumerSecretToSave, m_UILogic.getDataAccessToken(), m_UILogic.getEmployeeListModeIsManagerView());
 			}
 		};
 	}	

@@ -63,9 +63,15 @@ public class Form_EmployeeTimeStatus {
 	private ActionListener GetActionListenerForSettingsChange(){
 		return new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {  
+				// Grab the current Consumer Secret we have. If it matches our constant then clear the variable so that we don't save the value potentially
+				// exposing sensitive information
+				String sConsumerSecretToSave = m_UILogic.getConsumerSecret();
+				if(sConsumerSecretToSave.equals(Constants.CONSUMER_SECRET_API_TOKEN)){ sConsumerSecretToSave = ""; }
+				
+				
 				// Save the settings
 				Preferences prefs = Preferences.userNodeForPackage(Form_EmployeeTimeStatus.class);
-				prefs.put(Constants.PREFS_KEY_CONSUMER_SECRET, m_UILogic.getConsumerSecret());
+				prefs.put(Constants.PREFS_KEY_CONSUMER_SECRET, sConsumerSecretToSave);
 				prefs.put(Constants.PREFS_KEY_USER_TOKEN, m_UILogic.getDataAccessToken());
 				prefs.putBoolean(Constants.PREFS_KEY_EMPLOYEE_LIST_MODE, m_UILogic.getEmployeeListModeIsManagerView());
 			}
