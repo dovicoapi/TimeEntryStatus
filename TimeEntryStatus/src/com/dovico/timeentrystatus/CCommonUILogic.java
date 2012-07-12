@@ -9,6 +9,8 @@ import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.*;
 
+import com.dovico.commonlibrary.CPanel_About;
+
 //
 // We now have two classes 'Form_EmployeeTimeStatus', which is for standard Desktop type applications, and 'Applet_EmployeeTimeStatus' which is for web-based 
 // applications  
@@ -30,6 +32,7 @@ public class CCommonUILogic {
 	
 	// Settings tab
 	private CPanel_SettingsEx m_pSettingsTab =  null;
+	private CPanel_About m_pAboutTab = null;
 	private int m_iPreviousTabIndex = -1;
 	private int m_iSettingsTabIndex = 1;
 		
@@ -112,6 +115,10 @@ public class CCommonUILogic {
 		// Create our Settings Tab panel and add it to our tab control
 		m_pSettingsTab = new CPanel_SettingsEx(); 
 		m_pTabControl.addTab("Settings", null, m_pSettingsTab, null);
+		
+		// Create our About Tab panel and add it to our tab control
+		m_pAboutTab = new CPanel_About("Time Entry Status", "1.1"); 
+		m_pTabControl.addTab("About", null, m_pAboutTab, null);
 	}
 	
 	
