@@ -60,12 +60,20 @@ public class CPanel_SettingsEx extends CPanel_Settings {
 		super.setSettingsData(sConsumerSecretToUse, sDataAccessToken, Constants.API_VERSION_TARGETED, 0L, "", "", bHideConsumerSecretField);
 		
 		
+		// The vertical offset we want to bump the Access Token labels down by
+		int iAccessTokenLabelVerticalOffset = 80;
+		
 		// If we hid the Consumer Secret field then...
 		if(bHideConsumerSecretField){
 			m_lblEmployeeListMode.setBounds(10, (73 - 30), 117, 20);
 			m_optManagerView.setBounds(133, (73 - 30), 305, 20);
 			m_optUserView.setBounds(133, (103 - 30), 305, 20);
-		}
+			iAccessTokenLabelVerticalOffset -= 30;
+		} // End if(bHideConsumerSecretField)
+
+		// Bump the Access Token labels down some so that they are below the controls on our settings dialog
+		super.adjustAccessTokenLabelVerticalPositions(iAccessTokenLabelVerticalOffset);
+
 		
 		// Cause the radio buttons to be selected based on if we're in Manager view or User view 
 		m_optManagerView.setSelected(bEmployeeListModeIsManagerView);
